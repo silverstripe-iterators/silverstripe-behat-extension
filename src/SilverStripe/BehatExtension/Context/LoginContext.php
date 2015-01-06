@@ -98,6 +98,7 @@ class LoginContext extends BehatContext
             $member->FirstName = $permCode;
             $member->Surname = "User";
             $member->Email = "$permCode@example.org";
+            $member->PasswordEncryption = "none";
             $member->changePassword('Secret!123');
             $member->write();
             $group->Members()->add($member);
