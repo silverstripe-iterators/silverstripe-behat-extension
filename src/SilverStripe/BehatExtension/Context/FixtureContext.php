@@ -226,7 +226,12 @@ class FixtureContext extends BehatContext
 		}
 
 		$obj = $this->fixtureFactory->get($class, $id);
-		if(!$obj) $obj = $this->fixtureFactory->createObject($class, $id, $data);
+		if($obj) {
+			$obj->update($data);
+			$obj->write();
+		} else {
+			$obj = $this->fixtureFactory->createObject($class, $id, $data);
+		}
 
 		switch($relation) {
 			case 'parent':
