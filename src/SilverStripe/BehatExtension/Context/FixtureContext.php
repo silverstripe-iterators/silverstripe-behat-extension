@@ -248,14 +248,25 @@ class FixtureContext extends BehatContext
 		}
 	}
 
+	/**
+	 * Assign a type of object to another type of object. The base object will be created if it does not exist already.
+	 * If the last part of the string (in the "X" relation) is omitted, then the first matching relation will be used.
+	 *
+	 * @example I assign the "TaxonomyTerm" "For customers" to the "Page" "Page1"
+	 * @Given /^I assign (?:(an|a|the) )"(?<type>[^"]+)" "(?<value>[^"]+)" to (?:(an|a|the) )"(?<relationType>[^"]+)" "(?<relationId>[^"]+)"$/
+	 */
+	public function stepIAssignObjToObj($type, $value, $relationType, $relationId) {
+		self::stepIAssignObjToObjInTheRelation($type, $value, $relationType, $relationId, null);
+	}
+
  	/**
 	 * Assign a type of object to another type of object. The base object will be created if it does not exist already.
 	 * If the last part of the string (in the "X" relation) is omitted, then the first matching relation will be used.
 	 * 
 	 * @example I assign the "TaxonomyTerm" "For customers" to the "Page" "Page1" in the "Terms" relation
-	 * @Given /^I assign (?:(an|a|the) )"(?<type>[^"]+)" "(?<value>[^"]+)" to (?:(an|a|the) )"(?<relationType>[^"]+)" "(?<relationId>[^"]+)"(?:( in the "(?<relationName>[^"]+)" relation)*)$/
+	 * @Given /^I assign (?:(an|a|the) )"(?<type>[^"]+)" "(?<value>[^"]+)" to (?:(an|a|the) )"(?<relationType>[^"]+)" "(?<relationId>[^"]+)" in the "(?<relationName>[^"]+)" relation$/
 	 */
-	public function stepIAssignObjToObj($type, $value, $relationType, $relationId, $relationName = "") {
+	public function stepIAssignObjToObjInTheRelation($type, $value, $relationType, $relationId, $relationName) {
 		$class = $this->convertTypeToClass($type);
 		$relationClass = $this->convertTypeToClass($relationType);
 
